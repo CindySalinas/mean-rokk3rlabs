@@ -63,6 +63,7 @@ angular.module('app.tasks', [])
 					_.remove($scope.tasks, function(value) {
 						return value._id === id
 					});
+					$scope.reset();
 				}
 			}, function(err){
 				$scope.message = 'Error deleting the task';
