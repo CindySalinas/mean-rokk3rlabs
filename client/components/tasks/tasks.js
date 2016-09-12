@@ -19,8 +19,15 @@ angular.module('app.tasks', [])
 		});
 
 		$scope.createTask = function(){
+
+			var date = $scope.dueDate ? _.clone($scope.dueDate) : new Date();
+			var month = (date.getMonth()+1) >= 10 ? (date.getMonth()+1)  : '0' + (date.getMonth()+1);
+			var day =  date.getDate() >= 10 ? date.getDate() : '0'+ date.getDate();
+
+			var dateFormat = date.getFullYear()  + '-' + month + '-' + day;
+
 			//create task
-			taskService.create($scope.name, $scope.priority, $scope.dueDate).then(function(res){
+			taskService.create($scope.name, $scope.priority, dateFormat).then(function(res){
 				if(res.data){
 					$scope.tasks.push(res.data);
 					$scope.message = 'Created';
