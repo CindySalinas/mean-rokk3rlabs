@@ -102,6 +102,9 @@ angular.module('app.tasks', [])
 			$scope.priority =
 			$scope.dueDate = undefined;
 			$scope.create = true;
+			$scope.msgError = false;
+			$scope.msgSuccess = false;
+			$scope.message = '';
 		}
 
 		$scope.sort = function(field){
