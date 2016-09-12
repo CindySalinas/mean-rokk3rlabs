@@ -21,19 +21,25 @@ angular.module('app.tasks', [])
 		});
 
 		$scope.createTask = function(){
-			var date = $scope.dueDate ? _.clone($scope.dueDate) : new Date();
-			var dateFormat = moment(date).format('YYYY-MM-DD');
-			//create task
-			taskService.create($scope.name, $scope.priority, dateFormat).then(function(res){
-				if(res.data){
-					$scope.tasks.push(res.data);
-					$scope.msgSuccess = true;
-					$scope.message = 'Created';
-				}
-			}, function(err){
+			if($scope.dueDate && $scope.name && $scope.priority){
+				var date = $scope.dueDate ? _.clone($scope.dueDate) : new Date();
+				var dateFormat = moment(date).format('YYYY-MM-DD');
+				//create task
+				taskService.create($scope.name, $scope.priority, dateFormat).then(function(res){
+					if(res.data){
+						$scope.tasks.push(res.data);
+						$scope.msgSuccess = true;
+						$scope.message = 'Created';
+					}
+				}, function(err){
+					$scope.msgError = true;
+					$scope.message = 'Error creating the task';
+				});
+			}
+			else{
 				$scope.msgError = true;
-				$scope.message = 'Error creating the task';
-			});
+				$scope.message = 'Complete all fields';
+			}
 		};
 
 		$scope.update = function(data){
@@ -46,26 +52,32 @@ angular.module('app.tasks', [])
 		};
 
 		$scope.updateTask = function(){
-			//data
-			var data = {
-				name: $scope.name,
-				priority: $scope.priority,
-				dueDate: moment($scope.dueDate).format('YYYY-MM-DD'),
-			};
-			//update task
-			taskService.update($scope.idTask, data).then(function(res){
-				if(res.data){
-					_.forEach($scope.tasks, function(data, key){
-						if(data._id === $scope.idTask)
-							$scope.tasks[key] = res.data;
-					});
-					$scope.msgSuccess = true;
-					$scope.message = 'Updated';
-				}
-			}, function(err){
+			if($scope.dueDate && $scope.name && $scope.priority){
+				//data
+				var data = {
+					name: $scope.name,
+					priority: $scope.priority,
+					dueDate: moment($scope.dueDate).format('YYYY-MM-DD'),
+				};
+				//update task
+				taskService.update($scope.idTask, data).then(function(res){
+					if(res.data){
+						_.forEach($scope.tasks, function(data, key){
+							if(data._id === $scope.idTask)
+								$scope.tasks[key] = res.data;
+						});
+						$scope.msgSuccess = true;
+						$scope.message = 'Updated';
+					}
+				}, function(err){
+					$scope.msgError = true;
+					$scope.message = 'Error updating the task';
+				});
+			}
+			else{
 				$scope.msgError = true;
-				$scope.message = 'Error updating the task';
-			});
+				$scope.message = 'Complete all fields';
+			}
 		};
 
 		$scope.deleteTask = function(id){
