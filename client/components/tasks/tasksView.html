@@ -1,28 +1,77 @@
 <section class="container-list">
-	<h2>TO-DO List</h2>
-	<section>
+	<section class="form">
+		<h3>TO-DO List</h3>
+		<div class="alert" ng-if="message">
+			<span>{{message}}</span>
+		</div>
 		<form>
-			<div>
-				<label for="name">Name</label>
-				<input name="name" type="text">
-			</div>
-			<div>
-				<label for="dueDate">Due Date</label>
-				<input name="dueDate" type="text">
-			</div>
-			<div>
-				<label for="name">Priority</label>
-				<input type="text">
-			</div>
-			<button>Add a Task</button>
+			<ul>
+				<li>
+					<label for="name">Name</label>
+					<input name="name"  ng-model="name" type="text">
+				</li>
+				<li>
+					<label for="dueDate">Due Date</label>
+					<input name="dueDate"  ng-model="dueDate" type="text">
+				</li>
+				<li>
+					<label for="name">Priority</label>
+					<input type="text" ng-model="priority" >
+				</li>
+			</ul>
+			<button ng-if="create" ng-click="createTask()">Add Task</button>
+			<button ng-if="!create" ng-click="updateTask()">Update Task</button>
+			<button ng-click="reset()">Reset</button>
 		</form>
+		<br>
+		<hr>
+		<article>
+			<h3>Order By</h3>
+			<div>
+				<button>Name</button>
+				<button>Due Date</button>
+				<button>Priority</button>
+			</div>
+		</article>
 	</section>
-	<section>
+	<section class="lists">
 		<article>
 			<h3>Pending</h3>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>DueDate</th>
+					<th>Priority</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+				<tr ng-repeat="data in tasks | filter:{overdue:false}">
+					<td>{{data.name}}</td>
+					<td>{{data.due_date}}</td>
+					<td>{{data.priority}}</td>
+					<td><a ng-click="update(data)"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+					<td><a ng-click="deleteTask(data._id)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+				</tr>
+			</table>
 		</article>
 		<article>
 			<h3>Overdue</h3>
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>DueDate</th>
+					<th>Priority</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+				<tr class="overdue" ng-repeat="data in tasks | filter:{overdue:true}">
+					<td>{{data.name}}</td>
+					<td>{{data.due_date}}</td>
+					<td>{{data.priority}}</td>
+					<td><a ng-click="update(data)"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+					<td><a ng-click="deleteTask(data._id)"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+				</tr>
+			</table>
 		</article>
 	</section>
 </section>
