@@ -105,7 +105,60 @@ router.get('/', function(req, res) {
 		return res.send(data);
 	});
 });
+/**
+  * /task/destroy/:id (GET)
 
+  * Delete task
+
+  * @param
+    * id(mongoId)
+
+   * return Object
+*/
+router.get('/destroy/:id', function(req, res) {
+	//validate params
+	req.checkParams({
+		id: {
+			notEmpty: {
+				errorMessage: 'Id is required'
+			},
+			isMongoId: {
+				errorMessage: 'Invalid id field'
+			}
+		}
+	});
+	//validate error
+	var errors = req.validationErrors();
+	//send error
+	if(errors)
+		return res
+			.status(500)
+			.send({
+				status: 500,
+				errors: errors
+			});
+	//find and remove
+	Task.findOneAndRemove({ _id: req.params.id }, function(err, data) {
+		if(err)
+			return res
+				.status(500)
+				.send({
+					status: 500,
+					errors: err
+				});
+		if(data)
+			return res
+				.status(200)
+				.send(data);
+		else
+			return res
+				.status(404)
+				.send({
+					status: 404,
+					errors: 'Not exist'
+				});
+	});
+});
 function overdue(date){
 	var now = moment().format('YYYY-MM-DD');
 	if(moment(date, 'YYYY-MM-DD').diff(now, 'day') > 0)
