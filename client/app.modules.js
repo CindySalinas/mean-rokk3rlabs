@@ -7,4 +7,7 @@ angular.module('fullstackApp', [
 	])
 	.service('lodash', ['$window', function($window) {
 		return $window._;
+	}])
+	.service('moment', ['$window', function($window){
+		return $window.moment;
 	}]);
