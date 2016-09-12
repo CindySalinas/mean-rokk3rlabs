@@ -36,39 +36,55 @@ table
 	tr.overdue
 		color red
 
-.alert {
-    position: relative;
-    display: block;
-    padding: 1em 1.8em;
-    font-size: 0.9em;
-    font-weight: 300;
-    line-height: 1.2;
-    text-align: left;
-    margin-top: 0.4em;
-    margin-bottom: 0.4em;
-    background: transparent;
-    color: white;
-}
+.linksClick
+	cursor pointer
+
+.alert
+	position relative
+	display block
+	padding 1em 1.8em
+	font-size 0.9em
+	font-weight 300
+	line-height 1.2
+	text-align left
+	margin-top 0.4em
+	margin-bottom 0.4em
+	background transparent
+	color white
 
 /* Error */
-.alert-error {
-  background: #e74c3c;
-  border: 1px solid #c0392b;
-}
+.alert-error
+	background #e74c3c
+	border 1px solid #c0392b
 
 /* Success */
-.alert-success {
-  background: #2ecc71;
-  border: 1px solid #27ae60;
-}
+.alert-success
+	background #2ecc71
+	border 1px solid #27ae60
 
 /* Info */
-.alert-info {
-  background: #3498db;
-  border: 1px solid #2980b9;
-}
+.alert-info
+	background #3498db
+	border 1px solid #2980b9
 
 /* Radius */
-.radius {
-  border-radius: 3px;
-}
+.radius
+	border-radius 3px
+
+button
+	color #fff
+	width auto
+	cursor pointer
+	margin-top 15px
+	padding 10px
+	border 0
+	background #2d91d0 !important
+	border-radius 2px
+	color font-white
+	border 1px solid font-white
+	transition all ease 0.3s
+	font-weight 700
+		&:hover,
+		&:active,
+		&:focus
+			background #123
