@@ -2,5 +2,9 @@
 'use strict';
 
 angular.module('fullstackApp', [
-    'ui.router'
-  ]);
+		'ui.router',
+		'app.tasks'
+	])
+	.service('lodash', ['$window', function($window) {
+		return $window._;
+	}]);

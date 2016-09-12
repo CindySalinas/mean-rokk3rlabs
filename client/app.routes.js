@@ -16,6 +16,11 @@ angular.module('fullstackApp')
         abstract: true,
         templateUrl: "./views/home/homeView.html",
       })
+      .state('app.tasks', {
+          url: '/',
+          templateUrl: './views/tasks/tasksView.html',
+          controller: "TasksCtrl"
+      })
       .state('404', {
           url: '/404',
           templateUrl: './views/not_found/404.html'
