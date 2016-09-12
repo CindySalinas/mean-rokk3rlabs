@@ -1,7 +1,7 @@
 <section class="container-list">
 	<section class="form">
 		<h3>TO-DO List</h3>
-		<div class="alert" ng-if="message">
+		<div class="alert radius"  ng-class="{'alert-success': msgSuccess, 'alert-error': msgError}" ng-if="message">
 			<span>{{message}}</span>
 		</div>
 		<form>

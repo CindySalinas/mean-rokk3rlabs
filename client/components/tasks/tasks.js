@@ -16,6 +16,8 @@ angular.module('app.tasks', [])
 				$scope.tasks = res.data;
 			}
 		}, function(err){
+			$scope.msgError = true;
+			$scope.message = 'Error get data';
 		});
 
 		$scope.createTask = function(){
@@ -30,9 +32,11 @@ angular.module('app.tasks', [])
 			taskService.create($scope.name, $scope.priority, dateFormat).then(function(res){
 				if(res.data){
 					$scope.tasks.push(res.data);
+					$scope.msgSuccess = true;
 					$scope.message = 'Created';
 				}
 			}, function(err){
+				$scope.msgError = true;
 				$scope.message = 'Error creating the task';
 			});
 		};
@@ -60,9 +64,11 @@ angular.module('app.tasks', [])
 						if(data._id === $scope.idTask)
 							$scope.tasks[key] = res.data;
 					});
+					$scope.msgSuccess = true;
 					$scope.message = 'Updated';
 				}
 			}, function(err){
+				$scope.msgError = true;
 				$scope.message = 'Error updating the task';
 			});
 		};
@@ -75,9 +81,11 @@ angular.module('app.tasks', [])
 					_.remove($scope.tasks, function(value) {
 						return value._id === id
 					});
+					$scope.msgSuccess = true;
 					$scope.reset();
 				}
 			}, function(err){
+				$scope.msgError = true;
 				$scope.message = 'Error deleting the task';
 			});
 		};
