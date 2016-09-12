@@ -5,6 +5,11 @@ angular.module('app.tasks', [])
 
 		$scope.tasks = [];
 		$scope.create = true;
+		$scope.sortBy = {
+			name: false,
+			dueDate: false,
+			priority: false
+		};
 		//get data
 		taskService.get().then(function(res){
 			if(res.data){
@@ -75,5 +80,17 @@ angular.module('app.tasks', [])
 			$scope.priority =
 			$scope.dueDate = undefined;
 			$scope.create = true;
+		}
+
+		$scope.sort = function(field){
+			var sort = 'desc';
+			if(!$scope.sortBy[field]){
+				sort = 'asc';
+				$scope.sortBy[field] = true;
+			}
+			else{
+				$scope.sortBy[field] = false;
+			}
+			$scope.tasks = _.orderBy($scope.tasks, [field], [sort]);
 		}
 }]);
