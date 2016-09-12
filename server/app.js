@@ -3,8 +3,29 @@ var express = require('express'),
 		app = express(),
 		mongoose = require('mongoose'),
 		config = require('./../config'),
+		tasks = require('./controllers/tasks'),
+		handlingError = require('./middlewares/handlingError'),
+		expressValidator = require('express-validator'),
+		validations = require('./helpers/validations'),
+		bodyParser = require('body-parser'),
 		port = config.port;
 
+//bodyParser
+app.use(bodyParser.json());
+//templates
+app.use(express.static(__dirname + '../../dist'));
+//validate
+app.use(expressValidator(validations));
+//controller
+app.use('/task', tasks);
+//not found
+app.get('*', function(req, res, next) {
+  var err = new Error();
+  err.status = 404;
+  next(err);
+});
+//handlingError
+app.use(handlingError.parseError);
 //database
 mongoose.Promise = global.Promise;
 mongoose.connect(config.db.url, function(err, res) {
