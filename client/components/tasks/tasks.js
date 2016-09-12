@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app.tasks', [])
-	.controller("TasksCtrl", ['$scope', 'taskService', 'lodash', function ($scope, taskService, _) {
+	.controller("TasksCtrl", ['$scope', 'taskService', 'lodash','moment', function ($scope, taskService, _, moment) {
 
 		$scope.tasks = [];
 		$scope.create = true;
@@ -21,13 +21,8 @@ angular.module('app.tasks', [])
 		});
 
 		$scope.createTask = function(){
-
 			var date = $scope.dueDate ? _.clone($scope.dueDate) : new Date();
-			var month = (date.getMonth()+1) >= 10 ? (date.getMonth()+1)  : '0' + (date.getMonth()+1);
-			var day =  date.getDate() >= 10 ? date.getDate() : '0'+ date.getDate();
-
-			var dateFormat = date.getFullYear()  + '-' + month + '-' + day;
-
+			var dateFormat = moment(date).format('YYYY-MM-DD');
 			//create task
 			taskService.create($scope.name, $scope.priority, dateFormat).then(function(res){
 				if(res.data){
@@ -45,7 +40,7 @@ angular.module('app.tasks', [])
 			//update fields
 			$scope.name = data.name;
 			$scope.priority = data.priority;
-			$scope.dueDate = data.due_date;
+			$scope.dueDate = moment(data.due_date, 'YYYY-MM-DD')._d;
 			$scope.idTask = data._id;
 			$scope.create = false;
 		};
@@ -55,7 +50,7 @@ angular.module('app.tasks', [])
 			var data = {
 				name: $scope.name,
 				priority: $scope.priority,
-				dueDate: $scope.dueDate,
+				dueDate: moment($scope.dueDate).format('YYYY-MM-DD'),
 			};
 			//update task
 			taskService.update($scope.idTask, data).then(function(res){
