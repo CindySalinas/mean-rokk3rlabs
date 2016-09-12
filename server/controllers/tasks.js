@@ -79,6 +79,32 @@ router.post('/create', function(req, res) {
 		return res.send(data);
 	});
 });
+/**
+  * /task (GET)
+
+  * Get task
+
+  * return Array
+*/
+router.get('/', function(req, res) {
+	//search
+	Task.find({}, function(err, data){
+		if(err)
+			return res
+				.status(500)
+				.send({
+					status: 500,
+					errors: err
+				});
+		var now = moment().format('YYYY-MM-DD');
+		data = _.map(data, function(value){
+			value = value.toObject();
+			value.overdue = overdue(value.due_date);
+			return value;
+		});
+		return res.send(data);
+	});
+});
 
 function overdue(date){
 	var now = moment().format('YYYY-MM-DD');
