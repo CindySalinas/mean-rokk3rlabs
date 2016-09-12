@@ -28,9 +28,18 @@
 		<article>
 			<h3>Order By</h3>
 			<div>
-				<button ng-click="sort('name')">Name</button>
-				<button ng-click="sort('due_date')">Due Date</button>
-				<button ng-click="sort('priority')">Priority</button>
+				<button ng-click="sort('name')">Name
+					<i class="fa fa-arrow-up" aria-hidden="true" ng-if="sortBy.name === false"></i>
+					<i class="fa fa-arrow-down" aria-hidden="true" ng-if="sortBy.name === true"></i>
+				</button>
+				<button ng-click="sort('due_date')">Due Date
+					<i class="fa fa-arrow-up" aria-hidden="true" ng-if="sortBy.due_date === false"></i>
+					<i class="fa fa-arrow-down" aria-hidden="true" ng-if="sortBy.due_date === true"></i>
+				</button>
+				<button ng-click="sort('priority')">Priority
+					<i class="fa fa-arrow-up" aria-hidden="true" ng-if="sortBy.priority === false"></i>
+					<i class="fa fa-arrow-down" aria-hidden="true" ng-if="sortBy.priority === true"></i>
+				</button>
 			</div>
 		</article>
 	</section>

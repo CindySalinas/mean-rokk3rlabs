@@ -7,7 +7,7 @@ angular.module('app.tasks', [])
 		$scope.create = true;
 		$scope.sortBy = {
 			name: false,
-			dueDate: false,
+			due_date: false,
 			priority: false
 		};
 		//get data
